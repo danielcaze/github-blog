@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+export const HomeContainer = styled.div``
+
 export const SummaryContainer = styled.div`
   width: 100%;
   padding: 3.2rem 4rem;
@@ -81,5 +83,33 @@ export const SummaryFooterItem = styled.a`
 
   span {
     color: ${({ theme }) => theme.colors['base-subtitle']};
+  }
+`
+
+export const HomeContent = styled.div`
+  margin-top: 7.6rem;
+
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        color: ${({ theme }) => theme.colors['base-subtitle']};
+        font-size: ${({ theme }) => theme.fonts['title-s']};
+        line-height: 1.6;
+      }
+
+      span {
+        color: ${({ theme }) => theme.colors['base-span']};
+        font-size: ${({ theme }) => theme.fonts['text-s']};
+        line-height: 1.6;
+      }
+    }
   }
 `

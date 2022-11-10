@@ -4,11 +4,11 @@ import * as S from './styles'
 
 export function DefaultLayout() {
   return (
-    <>
+    <S.DefaultLayoutWrapper>
       <Header />
       <S.OutletContainer>
         <Outlet />
       </S.OutletContainer>
-    </>
+    </S.DefaultLayoutWrapper>
   )
 }

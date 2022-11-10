@@ -5,11 +5,12 @@ import {
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { InputComponent } from './components/Input'
 import * as S from './styles'
 
 export function Home() {
   return (
-    <div>
+    <S.HomeContainer>
       <S.SummaryContainer>
         <img src="https://github.com/proccedure-caze.png" alt="" />
         <S.SummaryInfo>
@@ -28,6 +29,7 @@ export function Home() {
               volutpat pulvinar vel mass.
             </p>
           </S.SummaryContent>
+          {/* Gap to this component (v) is wrong, right now is 8px but it needs to be 24px */}
           <S.SummaryFooter>
             <S.SummaryFooterItem>
               <FontAwesomeIcon icon={faGithub} /> <span>danielcaze</span>
@@ -41,6 +43,16 @@ export function Home() {
           </S.SummaryFooter>
         </S.SummaryInfo>
       </S.SummaryContainer>
-    </div>
+      <S.HomeContent>
+        <header>
+          <div>
+            <h2>Publicações</h2>
+            <span>6 publicações</span>
+          </div>
+          <InputComponent />
+        </header>
+        <main></main>
+      </S.HomeContent>
+    </S.HomeContainer>
   )
 }

@@ -8,7 +8,13 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Nunito", sans-serif;
   }
 
+  :focus {
+    outline: 0;
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.blue};
+  }
+
   html, body {
     font-size: 62.5%;
+    --webkit-font-smoothing: antialiased;
   }
 `
