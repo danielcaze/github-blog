@@ -25,7 +25,23 @@ export const SummaryContainer = styled.div`
 export const SummaryInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.8rem 2.4rem;
+  gap: 2.4rem;
+  flex: 1;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    height: 100%;
+  }
+
+  @media (min-width: 1440px) {
+    > div {
+      gap: initial;
+      justify-content: space-between;
+    }
+  }
 `
 
 export const SummaryHeader = styled.header`
@@ -42,12 +58,24 @@ export const SummaryHeader = styled.header`
     color: ${({ theme }) => theme.colors.blue};
     font-size: ${({ theme }) => theme.fonts.link};
     line-height: 1.6;
+    border-bottom: 1px solid transparent;
 
     display: flex;
     align-items: center;
     gap: 0.8rem;
 
     text-decoration: none;
+
+    svg {
+      line-height: 0;
+      margin-top: -2.5px;
+    }
+
+    &:hover,
+    &:focus {
+      border-bottom-color: ${({ theme }) => theme.colors.blue};
+      transition: border-color 0.2s;
+    }
   }
 `
 
@@ -59,6 +87,10 @@ export const SummaryContent = styled.main`
     color: ${({ theme }) => theme.colors['base-text']};
     font-size: ${({ theme }) => theme.fonts['text-m']};
     line-height: 1.6;
+  }
+
+  @media (min-width: 1440px) {
+    max-width: initial;
   }
 `
 
@@ -88,6 +120,9 @@ export const SummaryFooterItem = styled.a`
 
 export const HomeContent = styled.div`
   margin-top: 7.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4.8rem;
 
   header {
     display: flex;
@@ -111,5 +146,11 @@ export const HomeContent = styled.div`
         line-height: 1.6;
       }
     }
+  }
+
+  main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3.2rem;
   }
 `
