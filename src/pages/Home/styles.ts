@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-export const HomeContainer = styled.div``
+export const HomeContainer = styled.div`
+  min-height: calc(100vh - 296px + 88px);
+`
 
 export const SummaryContainer = styled.div`
   width: 100%;
@@ -14,6 +16,7 @@ export const SummaryContainer = styled.div`
   border-radius: 10px;
 
   background-color: ${({ theme }) => theme.colors['base-profile']};
+  box-shadow: 0px 2px 28px rgba(0, 0, 0, 0.2);
 
   img {
     border-radius: 8px;
@@ -37,6 +40,8 @@ export const SummaryInfo = styled.div`
   }
 
   @media (min-width: 1440px) {
+    gap: 6.5rem;
+
     > div {
       gap: initial;
       justify-content: space-between;

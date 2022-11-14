@@ -2,7 +2,7 @@ import * as S from './styles'
 
 export function IssueCard() {
   return (
-    <S.IssueCardContainer>
+    <S.IssueCardContainer href="">
       <div>
         <h3>JavaScript data types and data structures</h3>
         <time dateTime="2022-11-10 10:50">Ha 1 dia</time>

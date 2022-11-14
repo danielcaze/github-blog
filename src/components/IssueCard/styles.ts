@@ -15,6 +15,8 @@ export const IssueCardContainer = styled.a`
 
   cursor: pointer;
 
+  text-decoration: none;
+
   div {
     display: flex;
     justify-content: space-between;

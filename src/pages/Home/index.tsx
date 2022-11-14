@@ -9,7 +9,7 @@ import { IssueCard } from '../../components/IssueCard'
 import { InputComponent } from './components/Input'
 import * as S from './styles'
 
-export function Home() {
+export function HomePage() {
   return (
     <S.HomeContainer>
       <S.SummaryContainer>
