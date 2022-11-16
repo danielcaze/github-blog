@@ -5,11 +5,27 @@ import {
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from 'react'
 import { IssueCard } from '../../components/IssueCard'
 import { InputComponent } from './components/Input'
+import { handleSearch } from '../../api'
 import * as S from './styles'
 
 export function HomePage() {
+  const [issues, setIssues] = useState([])
+  const [query, setQuery] = useState('')
+
+  function handleQueryChange(query: string) {
+    setQuery(query)
+  }
+
+  useEffect(() => {
+    async function search() {
+      const { items } = await handleSearch(query)
+      setIssues(items)
+    }
+    search()
+  }, [query])
   return (
     <S.HomeContainer>
       <S.SummaryContainer>
@@ -52,12 +68,13 @@ export function HomePage() {
             <h2>Publicações</h2>
             <span>6 publicações</span>
           </div>
-          <InputComponent />
+          <InputComponent queryChange={handleQueryChange} query={query} />
         </header>
         <main>
-          {[1, 2, 3, 4].map((post) => (
-            <IssueCard key={post} />
-          ))}
+          {issues.map((issue) => {
+            console.log(issue)
+            return <IssueCard key={issue} issue={issue} />
+          })}
         </main>
       </S.HomeContent>
     </S.HomeContainer>

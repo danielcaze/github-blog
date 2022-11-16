@@ -1,10 +1,17 @@
 import * as S from './styles'
 
-export function IssueCard() {
+interface IssueCardProps {
+  issue: {
+    title: string
+  }
+}
+
+export function IssueCard({ issue }: IssueCardProps) {
+  const { title } = issue
   return (
     <S.IssueCardContainer href="">
       <div>
-        <h3>JavaScript data types and data structures</h3>
+        <h3>{title}</h3>
         <time dateTime="2022-11-10 10:50">Ha 1 dia</time>
       </div>
       <p>
