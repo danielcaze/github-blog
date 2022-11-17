@@ -7,3 +7,7 @@ export const usersApi = axios.create({
 export const searchApi = axios.create({
   baseURL: 'https://api.github.com/search',
 })
+
+export const reposApi = axios.create({
+  baseURL: 'https://api.github.com/repos',
+})

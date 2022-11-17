@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const IssueCardContainer = styled.a`
+export const IssueCardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -35,10 +36,16 @@ export const IssueCardContainer = styled.a`
     }
   }
 
-  p {
+  > p {
     color: ${({ theme }) => theme.colors['base-text']};
     font-size: ${({ theme }) => theme.fonts['text-m']};
     line-height: 1.6;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
   }
 
   &:hover {
@@ -48,5 +55,6 @@ export const IssueCardContainer = styled.a`
 
   @media (min-width: 1440px) {
     max-width: 100%;
+    min-width: 416px;
   }
 `

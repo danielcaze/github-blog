@@ -109,8 +109,6 @@ export const SummaryFooterItem = styled.a`
   align-items: center;
   gap: 0.8rem;
 
-  display: inline-block;
-
   font-size: ${({ theme }) => theme.fonts['text-m']};
   line-height: 1.6;
 
