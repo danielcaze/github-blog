@@ -13,8 +13,11 @@ export const HeaderContainer = styled.header`
   background-repeat: no-repeat;
   background-size: cover;
 
-  img {
+  a {
     margin-block: 6.4rem auto;
-    object-fit: cover;
+
+    img {
+      object-fit: cover;
+    }
   }
 `

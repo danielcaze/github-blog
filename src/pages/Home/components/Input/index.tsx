@@ -1,10 +1,7 @@
 import * as S from './styles'
-import { InputHTMLAttributes } from 'react'
 import { useFormContext } from 'react-hook-form'
 
-export function InputComponent({
-  ...rest
-}: InputHTMLAttributes<HTMLInputElement>) {
+export function InputComponent() {
   const { register } = useFormContext()
   return <S.InputContainer {...register('query')} />
 }
