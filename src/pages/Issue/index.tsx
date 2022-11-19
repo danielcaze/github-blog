@@ -5,13 +5,13 @@ import {
   faCalendarDay,
   faComment,
 } from '@fortawesome/free-solid-svg-icons'
+import { formatDistanceToNow, format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
-import ReactMarkdown from 'react-markdown'
 import { Link, useLocation } from 'react-router-dom'
 import { reposApi } from '../../lib/api'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism'
+import Markdown from 'markdown-to-jsx'
 import * as S from './styles'
 
 interface IssueData {
@@ -19,6 +19,7 @@ interface IssueData {
   title: string
   html_url: string
   comments: number
+  created_at: string
   user: {
     login: string
   }
@@ -30,6 +31,16 @@ export function IssuePage() {
 
   const query = new URLSearchParams(search)
   const issueId = query.get('id')
+
+  const date = issueData ? new Date(issueData?.created_at) : new Date()
+  const formattedCreationDate = formatDistanceToNow(date, {
+    locale: ptBR,
+    addSuffix: true,
+  })
+  const formattedDateTitle = format(date, "dd 'de' MMMM 'de' yyyy 'às' HH:mm", {
+    locale: ptBR,
+  })
+  const formattedDatetime = format(date, 'yyyy-MM-dd HH:mm', { locale: ptBR })
 
   useEffect(() => {
     async function getIssueData() {
@@ -68,7 +79,10 @@ export function IssuePage() {
                   <span>{issueData.user.login}</span>
                 </S.SummaryFooterItem>
                 <S.SummaryFooterItem>
-                  <FontAwesomeIcon icon={faCalendarDay} /> <span>Ha 1 dia</span>
+                  <FontAwesomeIcon icon={faCalendarDay} />{' '}
+                  <time dateTime={formattedDatetime} title={formattedDateTitle}>
+                    {formattedCreationDate}
+                  </time>
                 </S.SummaryFooterItem>
                 <S.SummaryFooterItem>
                   <FontAwesomeIcon icon={faComment} />{' '}
@@ -78,27 +92,7 @@ export function IssuePage() {
             </div>
           </S.IssueSummary>
           <S.IssueContent>
-            <ReactMarkdown
-              children={issueData.body} // eslint-disable-line
-              components={{
-                code({ node, inline, className, children, ...props }) {
-                  const match = /language-(\w+)/.exec(className || '')
-                  return !inline && match ? (
-                    <SyntaxHighlighter
-                      children={String(children).replace(/\n$/, '')} //eslint-disable-line
-                      style={dracula as any}
-                      language={match[1]}
-                      PreTag="div"
-                      {...props}
-                    />
-                  ) : (
-                    <code className={className} {...props}>
-                      {children}
-                    </code>
-                  )
-                },
-              }}
-            />
+            <Markdown>{issueData.body}</Markdown>
           </S.IssueContent>
         </S.IssueContainer>
       ) : (

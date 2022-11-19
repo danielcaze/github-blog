@@ -17,6 +17,7 @@ interface IssueInterface {
   title: string
   body: string
   number: number
+  created_at: string
 }
 
 interface User {
@@ -24,7 +25,7 @@ interface User {
   followers: number
   company: string
   avatar_url: string
-  url: string
+  html_url: string
   name: string
   bio: string
 }
@@ -69,7 +70,7 @@ export function HomePage() {
               <div>
                 <S.SummaryHeader>
                   <strong>{user.name}</strong>
-                  <a href={user.url}>
+                  <a href={user.html_url}>
                     <span>GITHUB</span>
                     <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                   </a>
