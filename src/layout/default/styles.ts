@@ -6,8 +6,11 @@ export const DefaultLayoutWrapper = styled.div`
 
 export const OutletContainer = styled.div`
   max-width: 1728px;
+  min-height: calc(100vh - 296px + 88px);
   margin-inline: auto;
   padding-bottom: 23.4rem;
+
+  z-index: 1;
 
   @media (max-width: 1440px) {
     max-width: 864px;
