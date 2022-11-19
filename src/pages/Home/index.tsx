@@ -5,7 +5,10 @@ import {
   faUserGroup,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 import { IssueCard } from '../../components/IssueCard'
 import { InputComponent } from './components/Input'
 import { handleSearch } from '../../api'
@@ -30,14 +33,25 @@ interface User {
   bio: string
 }
 
+const searchFormSchema = z.object({
+  query: z.string(),
+})
+
+type SearchFormType = z.infer<typeof searchFormSchema>
+
 export function HomePage() {
   const [user, setUser] = useState<User>({} as User)
   const [isLoading, setIsLoading] = useState(true)
   const [issues, setIssues] = useState<IssueInterface[]>([])
-  const [query, setQuery] = useState('')
 
-  function handleQueryChange(query: string) {
-    setQuery(query)
+  const searchForm = useForm<SearchFormType>({
+    resolver: zodResolver(searchFormSchema),
+  })
+
+  const { handleSubmit } = searchForm
+
+  async function onSubmit(data: SearchFormType) {
+    await getIssues(data.query)
   }
 
   useEffect(() => {
@@ -50,13 +64,24 @@ export function HomePage() {
     getUserData()
   }, [])
 
+  const getIssues = useCallback(
+    async (query: string = '') => {
+      try {
+        setIsLoading(true)
+        const { items } = await handleSearch(query)
+        setIssues(items)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [issues],
+  )
+
   useEffect(() => {
-    async function search() {
-      const { items } = await handleSearch(query)
-      setIssues(items)
-    }
-    search()
-  }, [query])
+    getIssues()
+  }, [])
 
   return (
     <>
@@ -102,7 +127,11 @@ export function HomePage() {
                 <h2>Publicações</h2>
                 <span>{issues.length} publicações</span>
               </div>
-              <InputComponent queryChange={handleQueryChange} query={query} />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <FormProvider {...searchForm}>
+                  <InputComponent />
+                </FormProvider>
+              </form>
             </header>
             <main>
               {issues.map((issue) => {

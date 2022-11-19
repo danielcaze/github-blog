@@ -1,15 +1,10 @@
 import * as S from './styles'
+import { InputHTMLAttributes } from 'react'
+import { useFormContext } from 'react-hook-form'
 
-interface InputComponentProps {
-  queryChange(query: string): void
-  query: string
-}
-
-export function InputComponent({ queryChange, query }: InputComponentProps) {
-  return (
-    <S.InputContainer
-      onChange={(e) => queryChange(e.target.value)}
-      value={query}
-    />
-  )
+export function InputComponent({
+  ...rest
+}: InputHTMLAttributes<HTMLInputElement>) {
+  const { register } = useFormContext()
+  return <S.InputContainer {...register('query')} />
 }
