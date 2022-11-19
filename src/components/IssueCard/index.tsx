@@ -1,5 +1,4 @@
-import { formatDistanceToNow, format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { useDate } from '../../hooks/useDate'
 import * as S from './styles'
 
 interface IssueCardProps {
@@ -13,25 +12,14 @@ interface IssueCardProps {
 
 export function IssueCard({ issue }: IssueCardProps) {
   const { title, body, number, created_at: createdAt } = issue
-  const date = new Date(createdAt)
-  const publishedDateFormatted = format(
-    date,
-    "d 'de' MMMM 'de' yyyy 'às' HH:mm",
-    {
-      locale: ptBR,
-    },
-  )
-  const formattedDateTime = format(date, 'yyyy-MM-dd HH:mm', { locale: ptBR })
+  const { dateTime, dateTitle, creationDate } = useDate(createdAt)
 
   return (
     <S.IssueCardContainer to={`/issue?id=${number}`}>
       <div>
         <h3>{title}</h3>
-        <time dateTime={formattedDateTime} title={publishedDateFormatted}>
-          {formatDistanceToNow(date, {
-            addSuffix: true,
-            locale: ptBR,
-          })}
+        <time dateTime={dateTime} title={dateTitle}>
+          {creationDate}
         </time>
       </div>
       <p>{body}</p>

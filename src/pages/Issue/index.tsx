@@ -5,14 +5,13 @@ import {
   faCalendarDay,
   faComment,
 } from '@fortawesome/free-solid-svg-icons'
-import { formatDistanceToNow, format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { reposApi } from '../../lib/api'
+import { api } from '../../lib/api'
 import Markdown from 'markdown-to-jsx'
 import * as S from './styles'
+import { useDate } from '../../hooks/useDate'
 
 interface IssueData {
   body: string
@@ -26,77 +25,75 @@ interface IssueData {
 }
 
 export function IssuePage() {
-  const [issueData, setIssueData] = useState<IssueData | null>(null)
+  const [issue, setIssue] = useState<IssueData>({} as IssueData)
+  const [isLoading, setIsLoading] = useState(true)
   const { search } = useLocation()
+
+  const { dateTime, dateTitle, creationDate } = useDate(issue.created_at)
 
   const query = new URLSearchParams(search)
   const issueId = query.get('id')
 
-  const date = issueData ? new Date(issueData?.created_at) : new Date()
-  const formattedCreationDate = formatDistanceToNow(date, {
-    locale: ptBR,
-    addSuffix: true,
-  })
-  const formattedDateTitle = format(date, "dd 'de' MMMM 'de' yyyy 'às' HH:mm", {
-    locale: ptBR,
-  })
-  const formattedDatetime = format(date, 'yyyy-MM-dd HH:mm', { locale: ptBR })
-
-  useEffect(() => {
-    async function getIssueData() {
-      const { data } = await reposApi.get(
-        `/danielcaze/github-blog/issues/${issueId}`,
+  const getIssueData = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      const { data } = await api.get(
+        `repos/danielcaze/github-blog/issues/${issueId}`,
       )
-      setIssueData(data)
-    }
-    if (issueId) {
-      getIssueData()
+      setIssue(data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
     }
   }, [issueId])
 
-  console.log(issueData)
+  useEffect(() => {
+    getIssueData()
+  }, [])
+
   return (
     <>
-      {issueData ? (
-        <S.IssueContainer>
+      {isLoading ? (
+        <></>
+      ) : (
+        <>
           <S.IssueSummary>
             <header>
               <Link to="/">
                 <FontAwesomeIcon icon={faChevronLeft} /> VOLTAR
               </Link>
-              <a href={issueData.html_url}>
+              <a href={issue.html_url}>
                 VER NO GITHUB{' '}
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               </a>
             </header>
             <div>
               <main>
-                <h1>{issueData.title}</h1>
+                <h1>{issue.title}</h1>
               </main>
               <S.SummaryFooter>
                 <S.SummaryFooterItem>
                   <FontAwesomeIcon icon={faGithub} />{' '}
-                  <span>{issueData.user.login}</span>
+                  <span>{issue.user.login}</span>
                 </S.SummaryFooterItem>
                 <S.SummaryFooterItem>
                   <FontAwesomeIcon icon={faCalendarDay} />{' '}
-                  <time dateTime={formattedDatetime} title={formattedDateTitle}>
-                    {formattedCreationDate}
+                  <time dateTime={dateTime} title={dateTitle}>
+                    {creationDate}
                   </time>
                 </S.SummaryFooterItem>
                 <S.SummaryFooterItem>
                   <FontAwesomeIcon icon={faComment} />{' '}
-                  <span>{issueData.comments} comentarios</span>
+                  <span>{issue.comments} comentarios</span>
                 </S.SummaryFooterItem>
               </S.SummaryFooter>
             </div>
           </S.IssueSummary>
           <S.IssueContent>
-            <Markdown>{issueData.body}</Markdown>
+            <Markdown>{issue.body}</Markdown>
           </S.IssueContent>
-        </S.IssueContainer>
-      ) : (
-        <></>
+        </>
       )}
     </>
   )

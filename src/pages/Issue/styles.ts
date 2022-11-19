@@ -1,9 +1,5 @@
 import styled from 'styled-components'
 
-export const IssueContainer = styled.div`
-  min-height: calc(100vh - 296px - 234px + 88px);
-`
-
 export const IssueSummary = styled.div`
   display: flex;
   flex-direction: column;
@@ -112,14 +108,12 @@ export const IssueContent = styled.div`
       background: ${({ theme }) => theme.colors['base-post']};
       padding: 1rem;
 
-      > div {
-        background: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        code {
-          font-family: 'FiraCode', monospace !important;
-          line-height: 160% !important;
-        }
+      code {
+        font-family: 'FiraCode', monospace !important;
+        line-height: 160% !important;
+        font-size: ${({ theme }) => theme.fonts['text-m']};
+
+        color: ${({ theme }) => theme.colors.danger};
       }
     }
   }

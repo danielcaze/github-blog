@@ -1,8 +1,10 @@
-import { searchApi } from '../lib/api'
+import { api } from '../lib/api'
 
 export async function handleSearch(search: string) {
-  const { data } = await searchApi.get(
-    `issues?q=${encodeURIComponent(search)}%20repo:danielcaze/github-blog`,
+  const { data } = await api.get(
+    `search/issues?q=${encodeURIComponent(
+      search,
+    )}%20label:published%20repo:danielcaze/github-blog`,
   )
   return data
 }
