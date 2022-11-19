@@ -17,7 +17,8 @@ export const IssueSummary = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    a {
+    a,
+    button {
       color: ${({ theme }) => theme.colors.blue};
       text-decoration: none;
       display: flex;
@@ -25,6 +26,10 @@ export const IssueSummary = styled.div`
       gap: 0.8rem;
       font-size: ${({ theme }) => theme.fonts.link};
       line-height: 1.6;
+      background: transparent;
+      border: 0;
+
+      cursor: pointer;
 
       &:nth-child(2) svg {
         margin-top: -2.5px;

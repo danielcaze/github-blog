@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { api } from '../../lib/api'
 import Markdown from 'markdown-to-jsx'
 import * as S from './styles'
@@ -30,9 +30,14 @@ export function IssuePage() {
   const { search } = useLocation()
 
   const { dateTime, dateTitle, creationDate } = useDate(issue.created_at)
+  const navigate = useNavigate()
 
   const query = new URLSearchParams(search)
   const issueId = query.get('id')
+
+  function goBack() {
+    navigate(-1)
+  }
 
   const getIssueData = useCallback(async () => {
     try {
@@ -60,10 +65,10 @@ export function IssuePage() {
         <>
           <S.IssueSummary>
             <header>
-              <Link to="/">
+              <button onClick={goBack}>
                 <FontAwesomeIcon icon={faChevronLeft} /> VOLTAR
-              </Link>
-              <a href={issue.html_url}>
+              </button>
+              <a href={issue.html_url} target="_blank" rel="noreferrer">
                 VER NO GITHUB{' '}
                 <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
               </a>

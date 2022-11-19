@@ -50,7 +50,7 @@ export function Profile() {
             <div>
               <S.SummaryHeader>
                 <strong>{user.name}</strong>
-                <a href={user.html_url}>
+                <a href={user.html_url} target="_blank" rel="noreferrer">
                   <span>GITHUB</span>
                   <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
                 </a>
