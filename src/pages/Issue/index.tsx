@@ -1,17 +1,9 @@
-import { faGithub } from '@fortawesome/free-brands-svg-icons'
-import {
-  faArrowUpRightFromSquare,
-  faChevronLeft,
-  faCalendarDay,
-  faComment,
-} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useCallback, useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { api } from '../../lib/api'
 import Markdown from 'markdown-to-jsx'
 import * as S from './styles'
-import { useDate } from '../../hooks/useDate'
+import { Summary } from './components/Summary'
 
 interface IssueData {
   body: string
@@ -27,17 +19,10 @@ interface IssueData {
 export function IssuePage() {
   const [issue, setIssue] = useState<IssueData>({} as IssueData)
   const [isLoading, setIsLoading] = useState(true)
+
   const { search } = useLocation()
-
-  const { dateTime, dateTitle, creationDate } = useDate(issue.created_at)
-  const navigate = useNavigate()
-
   const query = new URLSearchParams(search)
   const issueId = query.get('id')
-
-  function goBack() {
-    navigate(-1)
-  }
 
   const getIssueData = useCallback(async () => {
     try {
@@ -63,38 +48,7 @@ export function IssuePage() {
         <></>
       ) : (
         <>
-          <S.IssueSummary>
-            <header>
-              <button onClick={goBack}>
-                <FontAwesomeIcon icon={faChevronLeft} /> VOLTAR
-              </button>
-              <a href={issue.html_url} target="_blank" rel="noreferrer">
-                VER NO GITHUB{' '}
-                <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
-              </a>
-            </header>
-            <div>
-              <main>
-                <h1>{issue.title}</h1>
-              </main>
-              <S.SummaryFooter>
-                <S.SummaryFooterItem>
-                  <FontAwesomeIcon icon={faGithub} />{' '}
-                  <span>{issue.user.login}</span>
-                </S.SummaryFooterItem>
-                <S.SummaryFooterItem>
-                  <FontAwesomeIcon icon={faCalendarDay} />{' '}
-                  <time dateTime={dateTime} title={dateTitle}>
-                    {creationDate}
-                  </time>
-                </S.SummaryFooterItem>
-                <S.SummaryFooterItem>
-                  <FontAwesomeIcon icon={faComment} />{' '}
-                  <span>{issue.comments} comentarios</span>
-                </S.SummaryFooterItem>
-              </S.SummaryFooter>
-            </div>
-          </S.IssueSummary>
+          <Summary issue={issue} />
           <S.IssueContent>
             <Markdown>{issue.body}</Markdown>
           </S.IssueContent>
