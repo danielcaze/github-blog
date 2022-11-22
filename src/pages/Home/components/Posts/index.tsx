@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { IssueCard } from '../../../../components/IssueCard'
-import { handleSearch } from '../../../../api'
 import * as S from './styles'
 import { Form } from '../Form'
+import { api } from '../../../../lib/api'
 
 interface IssueInterface {
   id: string
@@ -20,7 +20,13 @@ export function Posts() {
     async (query: string = '') => {
       try {
         setIsLoading(true)
-        const { items } = await handleSearch(query)
+        const {
+          data: { items },
+        } = await api.get(
+          `search/issues?q=${encodeURIComponent(
+            query,
+          )}%20label:published%20repo:danielcaze/github-blog`,
+        )
         setIssues(items)
       } catch (error) {
         console.error(error)
