@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const HomeContent = styled.div`
+export const PostsContainer = styled.div`
   margin-top: 7.6rem;
   display: flex;
   flex-direction: column;
