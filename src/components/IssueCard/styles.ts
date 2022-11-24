@@ -6,8 +6,9 @@ export const IssueCardContainer = styled(Link)`
   flex-direction: column;
   gap: 2rem;
 
-  max-width: 416px;
-  max-height: 260px;
+  width: 100%;
+  max-width: 100%;
+  height: 260px;
   padding: 3.2rem;
   border-radius: 10px;
 
@@ -51,10 +52,5 @@ export const IssueCardContainer = styled(Link)`
   &:hover {
     border-color: ${({ theme }) => theme.colors['base-label']};
     transition: border-color 0.2s;
-  }
-
-  @media (min-width: 1440px) {
-    max-width: 100%;
-    min-width: 416px;
   }
 `
