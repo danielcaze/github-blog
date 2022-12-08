@@ -14,6 +14,6 @@ export const OutletContainer = styled.div`
   padding-inline: 5rem;
 
   @media (min-width: 768px) {
-    padding-inline: 10rem;
+    padding-inline: 3%;
   }
 `
