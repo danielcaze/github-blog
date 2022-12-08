@@ -44,6 +44,12 @@ export const IssueContent = styled.div`
         font-size: ${({ theme }) => theme.fonts['text-m']};
 
         color: ${({ theme }) => theme.colors.danger};
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
       }
     }
   }

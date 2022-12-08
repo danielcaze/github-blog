@@ -53,6 +53,11 @@ export const IssueSummary = styled.div`
 export const SummaryFooter = styled.footer`
   display: flex;
   gap: 2.4rem;
+
+  @media (max-width: 580px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 export const SummaryFooterItem = styled.a`
