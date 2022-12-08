@@ -17,4 +17,16 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
     --webkit-font-smoothing: antialiased;
   }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: ${({ theme }) => theme.colors['base-profile']};
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors.blue};
+  }
 `
