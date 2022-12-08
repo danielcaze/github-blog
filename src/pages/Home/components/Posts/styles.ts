@@ -31,8 +31,15 @@ export const PostsContainer = styled.div`
   }
 
   main {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 3.2rem;
+  }
+
+  @media (min-width: 768px) {
+    main {
+      display: grid;
+      grid-template-columns: repeat(2, calc(50% - 1.6rem));
+    }
   }
 `

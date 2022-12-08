@@ -19,6 +19,10 @@ export const SummaryContainer = styled.div`
     max-width: 14.8rem;
     max-height: 14.8rem;
   }
+
+  @media (max-width: 840px) {
+    flex-direction: column;
+  }
 `
 
 export const SummaryInfo = styled.div`
@@ -78,6 +82,11 @@ export const SummaryHeader = styled.header`
       transition: border-color 0.2s;
     }
   }
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 export const SummaryContent = styled.main`
@@ -88,6 +97,12 @@ export const SummaryContent = styled.main`
     color: ${({ theme }) => theme.colors['base-text']};
     font-size: ${({ theme }) => theme.fonts['text-m']};
     line-height: 1.6;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   @media (min-width: 1440px) {
@@ -98,21 +113,33 @@ export const SummaryContent = styled.main`
 export const SummaryFooter = styled.footer`
   display: flex;
   gap: 2.4rem;
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+  }
 `
 
-export const SummaryFooterItem = styled.a`
+export const SummaryFooterItem = styled.p`
   display: flex;
   align-items: center;
   gap: 0.8rem;
 
-  font-size: ${({ theme }) => theme.fonts['text-m']};
-  line-height: 1.6;
-
   svg {
     color: ${({ theme }) => theme.colors['base-label']};
+    font-size: ${({ theme }) => theme.fonts['text-m']};
   }
 
   span {
     color: ${({ theme }) => theme.colors['base-subtitle']};
+    font-size: ${({ theme }) => theme.fonts['text-m']};
+    line-height: 1.6;
+
+    &:nth-child(2) {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+    }
   }
 `
