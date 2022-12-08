@@ -11,9 +11,9 @@ export const OutletContainer = styled.div`
   padding-bottom: 23.4rem;
 
   z-index: 1;
-  padding-inline: 5rem;
+  padding-inline: max(5rem, 5%);
 
-  @media (min-width: 768px) {
-    padding-inline: 3%;
+  @media (max-width: 768px) {
+    padding-inline: 5%;
   }
 `
